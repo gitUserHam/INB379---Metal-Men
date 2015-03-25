@@ -12,6 +12,7 @@ public class portalScript : MonoBehaviour {
 			Vector2 entrance = this.transform.position;
 			Vector2 exit = destination.transform.position;
 
+			// LATER I WANT TO CHANGE THE DEST TELEPORT TO THE OBJECT SIZE/2 + 1.
 			if(this.tag == "horizontalPortal") {
 				// Accounts for spawning on either side of the map. Negative for the left, positive for the right.
 				if (entrance.x > exit.x) {
