@@ -80,7 +80,6 @@ public class PlayControler : MonoBehaviour {
 				endCombo = false;
 			}
 			yield return null;
-			Debug.Log(endCombo);
 		}
 	}
 
@@ -119,9 +118,9 @@ public class PlayControler : MonoBehaviour {
 				damage = 5;
 			}
 			
-
+			StartCoroutine ("wait", damage);
 		}
-		StartCoroutine ("wait", damage);
+
 	}
 	
 	void doDamage(float value){
