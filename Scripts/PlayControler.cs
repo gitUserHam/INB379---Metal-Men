@@ -15,6 +15,7 @@ public class PlayControler : MonoBehaviour {
 	GameController controller;
 	GameObject gameControllerObject;
 
+	private KeyCombo Special= new KeyCombo(new string[] {"B"});
 	private KeyCombo Punch= new KeyCombo(new string[] {"X"});
 	private KeyCombo DoublePunch= new KeyCombo(new string[] {"X", "X"});
 	private KeyCombo SuperPunch= new KeyCombo(new string[] {"X", "B"});
@@ -73,7 +74,8 @@ public class PlayControler : MonoBehaviour {
 			if(Input.GetButtonDown("X_P"+playerNum) || Input.GetButtonDown("B_P"+playerNum)){
 				lastPressed = Time.time;
 			}
-			if(Time.time >= (lastPressed + 0.45f)){
+			if(Time.time >= (lastPressed + 0.45f) || combo > 5){
+				combo = 0;
 				endCombo = true;
 
 			}else{
@@ -83,7 +85,7 @@ public class PlayControler : MonoBehaviour {
 		}
 	}
 
-	IEnumerator wait(float damage)
+	IEnumerator knockBackDamage(float damage)
 	{
 		int i;
 		if (facingRight) {
@@ -97,28 +99,42 @@ public class PlayControler : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		
 		if (enemy != null) {
+			combo++;
 			enemy.gameObject.SendMessage ("doDamage", damage);
-			if(comboTemp){
-				enemy.GetComponent<Rigidbody2D> ().AddForce (Vector2.right * i * 2000);
+			if (comboTemp) {
+				int knockBack = 0;
+				GameObject tempEnemy = enemy;
+				Rigidbody2D tempRigid = tempEnemy.GetComponent<Rigidbody2D> ();
+				while(knockBack < 10){
+					tempRigid.velocity = new Vector2(15*i, tempRigid.velocity.y);
+					knockBack++;
+					yield return null;
+				}
 			}
+		} else {
+			combo = 0;
 		}
 	}
 	
 	void attack(){
-		combo = 0;
 		float damage = 0;
+//		if (Special.Check (playerNum)) {
+//			damage = 1;
+//			StartCoroutine ("knockBackDamage", damage);
+//		}
+
 		if (Punch.Check (playerNum)) {
 			if (DoublePunch.Check (playerNum)) {
 				if (falconPunch.Check (playerNum)) {
 					damage = 50;
 				} else {
-					damage = 10;
+					//damage = 10;
 				}
 			} else {
-				damage = 5;
+				//damage = 5;
 			}
 			
-			StartCoroutine ("wait", damage);
+			StartCoroutine ("knockBackDamage", damage);
 		}
 
 	}
