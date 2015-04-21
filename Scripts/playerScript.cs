@@ -118,7 +118,7 @@ public class playerScript : MonoBehaviour {
 		GameObject newPlayer = Instantiate (Players[player], spawnPoints[randomizer], Quaternion.identity) as GameObject;
 		// Enable the player controlling components on the new Game Object.
 		newPlayer.GetComponent<playerScript> ().enabled = true;
-		newPlayer.GetComponent<PlayControler> ().enabled = true;
+		newPlayer.GetComponent<PlayController> ().enabled = true;
 		// HAS TO BE FIXED. Needs the same collider or well have to do more checks.
 		//newPlayer.GetComponent<CircleCollider2D> ().enabled = true;
 		newPlayer.GetComponent<BoxCollider2D> ().enabled = true;

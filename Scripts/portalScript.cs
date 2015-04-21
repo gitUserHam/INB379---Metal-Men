@@ -6,6 +6,10 @@ public class portalScript : MonoBehaviour {
 	public Transform destination; 
 
 	void OnTriggerEnter2D(Collider2D player){
+		GameObject thing = player.gameObject;
+		if(player.gameObject.tag.Contains("Player")){
+			thing = player.transform.parent.gameObject;
+		}
 		if (destination != null) {
 			int i;
 			// Take note of where the player is, and where they will end up.
@@ -20,15 +24,15 @@ public class portalScript : MonoBehaviour {
 				} else { 
 					i = -2;
 				}
-				player.transform.position = new Vector2 (exit.x+i, player.transform.position.y);
+				thing.transform.position = new Vector2 (exit.x+i, player.transform.position.y);
 			} else if (this.tag == "verticalPortal") {
 				i = 1;				
-				player.transform.position = new Vector2 (player.transform.position.x, exit.y);
+				thing.transform.position = new Vector2 (player.transform.position.x, exit.y);
 			}
 
 		} else {
 			print ("Invalid portal destination.");
-			player.transform.position = this.transform.position;
+			thing.transform.position = this.transform.position;
 		}
 	}
 }

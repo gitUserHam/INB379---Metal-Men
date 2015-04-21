@@ -19,9 +19,10 @@ public class KeyCombo
 		{
 			if (currentIndex < buttons.Length)
 			{
-				if ((buttons[currentIndex] == "X" && Input.GetButtonDown("X_P"+player)) ||
+                if ((buttons[currentIndex] == "X" && Input.GetButtonDown("X_P" + player)) || 
+                    (buttons[currentIndex] == "Y" && Input.GetButtonDown("Y_P" + player)) ||
 				    (buttons[currentIndex] == "B" && Input.GetButtonDown("B_P"+player)) ||
-				    (buttons[currentIndex] != "X" && buttons[currentIndex] != "B" && Input.GetButtonDown(buttons[currentIndex])))
+				    (buttons[currentIndex] != "X" && buttons[currentIndex] != "Y" && buttons[currentIndex] != "B" && Input.GetButtonDown(buttons[currentIndex])))
 				{
 					timeLastButtonPressed = Time.time;
 					currentIndex++;
